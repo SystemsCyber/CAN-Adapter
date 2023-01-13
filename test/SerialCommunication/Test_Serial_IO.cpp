@@ -16,8 +16,8 @@ void tearDown(void) { // Function name must be tearDown(void)
 
 void test_Serial_Port(void) {
 
-    String test = "ColoradoRams";
-    Serial.print("ColoradoRams");
+    String test = "Colorado_Rams";
+    Serial.print("Colorado_Rams");
     
     String lastMessage = Serial.read();
     if(test == lastMessage){
