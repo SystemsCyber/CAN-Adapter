@@ -21,13 +21,6 @@ void tearDown(void) {
     myFile.close();
 }
 
-/*
-List the name of the files. Then maybe delete duplicate files that are named "CSU_CAN_Tool_Test_File"
-//https://docs.arduino.cc/learn/programming/sd-guide
-void test_Unique_FileName(void){
-    root = SD.open("/");
-}
-*/
 
 //Checks that the device can connect to the SD card, Create a new file, Write to that file, and read that file. 
 void test_Create_New_File_Read_Write(void) {
@@ -65,22 +58,14 @@ void test_Create_New_File_Read_Write(void) {
 
 
 
-int runUnityTests(void) {
-    UNITY_BEGIN();
-    RUN_TEST(test_Create_New_File_Read_Write);
-    return UNITY_END();
-}
-
-int main(void) {
-    return runUnityTests();
-}
-
 void setup() {
   // Wait ~2 seconds before the Unity test runner
   // establishes connection with a board Serial interface
   delay(2000);
 
-  runUnityTests();
+    UNITY_BEGIN();
+    RUN_TEST(test_Create_New_File_Read_Write);
+    UNITY_END();
 }
 void loop() {}
 

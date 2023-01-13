@@ -139,26 +139,20 @@ void test_LED_ROUTINE(void) {
     BLUELEDTest();
 }
 
-int runUnityTests(void) {
-    UNITY_BEGIN();
-    RUN_TEST(test_LED_ROUTINE);
-    TEST_ASSERT(test_GreenLED_passed);
-    TEST_ASSERT(test_YellowLED_passed);
-    TEST_ASSERT(test_REDLED_passed);
-    TEST_ASSERT(test_BLUELED_passed);
-    return UNITY_END();
-}
 
-int main(void) {
-    return runUnityTests();
-}
 
 void setup() {
   // Wait ~2 seconds before the Unity test runner
   // establishes connection with a board Serial interface
   delay(2000);
 
-  runUnityTests();
+    UNITY_BEGIN();
+    RUN_TEST(test_LED_ROUTINE);
+    TEST_ASSERT(test_GreenLED_passed);
+    TEST_ASSERT(test_YellowLED_passed);
+    TEST_ASSERT(test_REDLED_passed);
+    TEST_ASSERT(test_BLUELED_passed);
+    UNITY_END();
 }
 void loop() {}
 

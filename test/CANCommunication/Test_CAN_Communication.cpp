@@ -163,13 +163,6 @@ void test_can2_bus_flooding(void) { // This is a test function. The name should 
   TEST_ASSERT_EACH_EQUAL_UINT16(messagesToSend * 4, &receivedCounts, 2); // This will check if each element in the array is equal to 3000.
 }
 
-int runUnityTests(void) {
-  UNITY_BEGIN();
-  RUN_TEST(test_can0_bus_flooding);
-  RUN_TEST(test_can1_bus_flooding);
-  RUN_TEST(test_can2_bus_flooding);
-  return UNITY_END();
-}
 
 /**
   * Necessary For Arduino framework
@@ -192,6 +185,10 @@ void setup() {
   testMsg.buf[6] = 0x06;
   testMsg.buf[7] = 0x07;
 
-  runUnityTests();
+  UNITY_BEGIN();
+  RUN_TEST(test_can0_bus_flooding);
+  RUN_TEST(test_can1_bus_flooding);
+  RUN_TEST(test_can2_bus_flooding);
+  UNITY_END();
 }
 void loop() {}

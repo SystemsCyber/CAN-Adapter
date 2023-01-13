@@ -1,3 +1,8 @@
+
+////////////////////////////////////////////
+//This file is for when SD device formating is setup. 
+//Jake should finish this the rest of this
+//////////////////////////////////////////
 #include "FlexCAN_T4.h"
 #include "unity.h"
 #include <Arduino.h>
@@ -17,6 +22,7 @@ static uint16_t receivedCount2 = 0;
 static uint16_t messagesToSend = 300000;
 static int BAUDRATES[4] = {125000, 250000, 500000, 1000000};
 int channel_recieved_2Write;
+static char SDWRITEBUFFER[sizeof(CAN_message_t) + 1];
 
 //SD Card setup
 const int chipSelect = BUILTIN_SDCARD;
@@ -53,13 +59,31 @@ void receiveCallback(const CAN_message_t &rxmsg) {
     CANMsg_Recieve_Write_To_File(rxmsg, channel_recieved_2Write);
   }
 }
-void CANMsg_Recieve_Write_To_File(const CAN_message_t &rxmsg, int channel){
 
+void CANMsg_Recieve_Write_To_File(const CAN_message_t &rxmsg, int channel){
     if(channel == 1){
-        //Recieved on CAN 1
+      String message = "CAN 1 Received: ";
+      String mb = rxmsg.mb;
+      String id = rxmsg.id;
+      String ext = rxmsg.flags.extended;
+      String len = rxmsg.len;
+      message = message + mb + id + ext + len;
+      for ( uint8_t i = 0; i < 8; i++ ) {
+        message = message + rxmsg.buf[i];
+      }
+      myFile.println(message);
     }
     else{
-        //Recieved on CAN 2
+      String message = "CAN 2 Received: ";
+      String mb = rxmsg.mb;
+      String id = rxmsg.id;
+      String ext = rxmsg.flags.extended;
+      String len = rxmsg.len;
+      message = message + mb + id + ext + len;
+      for ( uint8_t i = 0; i < 8; i++ ) {
+        message = message + rxmsg.buf[i];
+      }
+      myFile.println(message);
     }
 }
 
@@ -99,11 +123,21 @@ void setupReceivingChannels(int receivingChannel1VAL, int receivingChannel2VAL, 
 
 
 
-void CANMsg_SENT_Write_to_File(CAN_message_t testMsg){
-    int mb = testMsg.mb;
-    int id = testMsg.id;
-    boolean ext = testMsg.flags.extended;
-    
+void CANMsg_SENT_Write_to_File(CAN_message_t &testMsg){
+  String message = "CAN0 sent:";
+  String mb = testMsg.mb;
+  String id = testMsg.id;
+  String ext = testMsg.flags.extended;
+  String len = testMsg.len;
+  message = message + mb + id + ext + len;
+  for ( uint8_t i = 0; i < 8; i++ ) {
+    message = message + testMsg.buf[i];
+  }
+  myFile.println(message);
+  memset(SDWRITEBUFFER, 0, sizeof(SDWRITEBUFFER));
+  memcpy(SDWRITEBUFFER, &testMsg, sizeof(CAN_message_t));
+  SDWRITEBUFFER[sizeof(CAN_message_t)] = '\n';
+  myFile.write((char*) &SDWRITEBUFFER);
 }
 
 //Sends messages over CAN0, and writes a message to SD and CAN 1 and 2. writes recieved message on can 2 and 3
@@ -126,7 +160,7 @@ File myFile = SD.open(file_Name, FILE_WRITE);
             CANMsg_SENT_Write_to_File(testMsg);
             sendCount++;
             }
-        }
+         }
         }
     }
 }
@@ -146,13 +180,6 @@ void test_can0_bus_flooding(void) { // This is a test function. The name should 
 
 
 
-
-
-int runUnityTests(void) {
-  UNITY_BEGIN();
-
-  return UNITY_END();
-}
 
 
 
@@ -178,6 +205,8 @@ void setup() {
   testMsg.buf[6] = 0x06;
   testMsg.buf[7] = 0x07;
 
-  runUnityTests();
+  UNITY_BEGIN();
+  RUN_TEST(test_can0_bus_flooding);
+  UNITY_END();
 }
 void loop() {}
