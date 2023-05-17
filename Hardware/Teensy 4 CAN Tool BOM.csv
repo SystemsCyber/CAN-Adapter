@@ -1,0 +1,18 @@
+Line #,Name,Description,Designator,Quantity,Manufacturer 1,Manufacturer Part Number 1,Manufacturer Lifecycle 1,Supplier 1,Supplier Part Number 1,Supplier Unit Price 1,Supplier Subtotal 1
+
+"1","Board Headers","24 pin sockets","","2","Sullins","PPPC241LFBN-RC","Volume Production","Digi-Key","S7057-ND","1.43","2.86"
+"2","Teensy Headers","24 pins spaced 0.100"" apart","","2","Sullins","PRPC024SFAN-RC","Volume Production","Digi-Key","S1211EC-24-ND","0.68","1.36"
+"3","Term Resistor Header","6 Pins to hold shunts","","1","Sullins","PRPC006SFAN-RC","Volume Production","Digi-Key","S1211EC-06-ND","0.21","0.21"
+"4","LED","Blue 470nm LED Indication - Discrete 3.2V Radial","BLU","1","Wurth Electronics","151051BS04000","Volume Production","Digi-Key","732-5015-ND","0.26","0.26"
+"","0.1uF","0.1µF ±10% 50V Ceramic Capacitor X7R 0603 (1608 Metric)","C1, C2, C3","3","Vishay BCcomponents","K104K15X7RF53H5","Unknown","Digi-Key","BC3323-ND","0.23","0.69"
+"5","Header 3","Header, 3-Pin","CAN1, CAN2, CAN3","3","Phoenix Contact","PT1.5/3-5.0-H","Volume Production","Digi-Key","277-1578-ND","0.71","2.13"
+"6","LED","Green 572nm LED Indication - Discrete 2.1V Radial","GRN","1","Wurth Electronics","151051VS04000","Volume Production","Digi-Key","732-5017-ND","0.26","0.26"
+"7","D Connector 9","CONN D-SUB PLUG 9POS R/A SLDR","J1","1","Assmann","A-DS-09-A/KG-T2S","Volume Production","Digi-Key","AE10968-ND","0.78","0.78"
+"","Header 2","Header, 2-Pin","P1","1","","","","","","",""
+"8","120","120 Ohms ±5% 0.25W, 1/4W Through Hole Resistor Axial Carbon Film","R1, R2, R7","3","Yageo","CFR-25JB-52-120R","Volume Production","Digi-Key","120QBK-ND","0.1","0.3"
+"9","470","470 Ohms ±5% 0.25W, 1/4W Through Hole Resistor Axial Carbon Film","R3, R4, R5, R6","4","Yageo","CFR-25JB-52-470R","Volume Production","Digi-Key","470QBK-ND","0.1","0.4"
+"10","LED","Red 645nm LED Indication - Discrete 2.1V Radial","RED","1","Wurth Electronics","151051RS11000","Volume Production","Digi-Key","732-5016-ND","0.17","0.17"
+"11","Teensy 4.1","32 Bit Arduino-Compatible iMX Microcontroller","Teensy 4.1","1","SparkFun","16771","Unknown","Digi-Key","1568-DEV-16771-ND","33.08","33.08"
+"12","Header 2","2 (1 x 2) Position Shunt Connector Open Top, Grip 0.100"" (2.54mm) Gold","Term1, Term2, Term3","3","Sullins","NPC02SXON-RC","Volume Production","Digi-Key","S9341-ND","0.11","0.33"
+"13","MCP2562","1/1 Transceiver CANbus 8-PDIP","U1, U2, U3","3","Microchip","MCP2562FD-E/P","Volume Production","Digi-Key","MCP2562FD-E/P-ND","1.38","4.14"
+"14","LED","Yellow 590nm LED Indication - Discrete 2V Radial","YEL","1","Wurth Electronics","151051YS04000","Volume Production","Digi-Key","732-5018-ND","0.23","0.23"
