@@ -61,8 +61,8 @@ void setup(void) {
 }
 
 /*
-Show the CAN messages as they come in over Serial. This function is no necessary
-and is supplied for debugging.
+Show the CAN messages as they come in over Serial. This function "
+is not necessary and is supplied for debugging.
 */
 void print_CAN(const CAN_message_t &msg){
   Serial.print("MB "); Serial.print(msg.mb);
