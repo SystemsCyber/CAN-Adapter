@@ -25,7 +25,18 @@ elapsedMillis red_toggle_timer;
 elapsedMillis yellow_toggle_timer;
 elapsedMillis blue_toggle_timer;
 
+elapsedMillis light_send;
+
+#define TRIGGER_PIN 10
+bool trigger_state;
+
+void send_light_command
+
 void setup(void) {
+  // set mode for trigger pin
+  pinMode(TRIGGER_PIN,INPUT);
+
+
   //Keep the Builtin LED (pin 13) on the whole time to show it's plugged in
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, HIGH);
@@ -82,7 +93,7 @@ void print_CAN(const CAN_message_t &msg){
 void can1Sniff(const CAN_message_t &msg) {
   YELLOW_LED_state = !YELLOW_LED_state;
   yellow_toggle_timer = 0;
-  //print_CAN(msg); 
+  print_CAN(msg); 
 
   //Make a new message based on the old one.
   CAN_message_t new_msg = msg;
@@ -93,23 +104,23 @@ void can1Sniff(const CAN_message_t &msg) {
   
   // Change the message values for each byte as you wish
   //0CEFC180#5A64FF00FFFFFFFF
-  if (pgn == 0xEFC1){ //0xFEF1
-    new_msg.buf[0]=byte(.2*msg.buf[0]);
-    // new_msg.buf[1]=0x11;
-    // new_msg.buf[2]=0x22;
-    // new_msg.buf[3]=0x33;
-    // new_msg.buf[4]=0x44;
-    // new_msg.buf[5]=0x55;
-    // new_msg.buf[6]=0x66;
-    // new_msg.buf[7]=0x77;
-    new_msg.id=0x0CEFC780;
-  }
-  else if (pgn == 0xEFC7){ // Look for another PGN
-    new_msg.id=0x0CEFC180;
-  }
-  else {
-    //Do nothing. the new message is the same as the old one.
-  }
+  // if (pgn == 0xEFC1){ //0xFEF1
+  //   new_msg.buf[0]=byte(.2*msg.buf[0]);
+  //   // new_msg.buf[1]=0x11;
+  //   // new_msg.buf[2]=0x22;
+  //   // new_msg.buf[3]=0x33;
+  //   // new_msg.buf[4]=0x44;
+  //   // new_msg.buf[5]=0x55;
+  //   // new_msg.buf[6]=0x66;
+  //   // new_msg.buf[7]=0x77;
+  //   new_msg.id=0x0CEFC780;
+  // }
+  // else if (pgn == 0xEFC7){ // Look for another PGN
+  //   new_msg.id=0x0CEFC180;
+  // }
+  // else {
+  //   //Do nothing. the new message is the same as the old one.
+  // }
   
   // Write the new message on the other channel.
   Can2.write(new_msg);
@@ -147,4 +158,5 @@ void loop() {
   Can1.events(); // These calls write events to the network
   Can2.events();
   check_led_timers();
+
 }
