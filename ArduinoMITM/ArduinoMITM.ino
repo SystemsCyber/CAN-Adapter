@@ -30,7 +30,7 @@ elapsedMillis light_send;
 #define TRIGGER_PIN 10
 bool trigger_state;
 
-void send_light_command
+void send_light_command();
 
 void setup(void) {
   // set mode for trigger pin

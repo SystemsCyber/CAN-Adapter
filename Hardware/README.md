@@ -4,9 +4,12 @@ This directory has PCB schematics, BOMs, and Altium PCB project files.
 
 All components are through hole, so it is easy to build with just a soldering iron.
 
-PDFs of the schematics are available.
+PDFs of the !(schematics)[Teensy%204%20CAN%20Tool%20Rev2%20Schematics.pdf] are available.
+
 
 ## Self-Assembly Instructions
+
+If using a powered connection, pins 3 and 6 are shorted together on the ground pin. However, pin 6 can also be pin 9 of the dsub is inverted, which will short the power to ground. Therefore, please cut the trace between pin 3 and 6 on the bottom of Version 2 of the board on the DSUB connection.
 
 ### Materials
 
@@ -34,7 +37,7 @@ The recommended order of population:
 - LED's (GRN, YLW, RED, BLU)
 - Headers (Female, 24 pin x2, 8 pin x2)
 - Connectors (6 pin x1)
-  - Cut into 3 sets of 2 pins ecah for the jumper connections
+  - Cut into 3 sets of 2 pins each for the jumper connections
 - Phoenix Contacts (x3)
 - DSUB Connector
 - Add terminating connections last (x3)
@@ -50,6 +53,3 @@ The PCB board on revision 1 needs 30 AWG wire to be soldered from:
   * RX = Pin 30 On Teensy 4.1 -> Pin 4 (RX) on U3 MCP2562FD
   * TX = Pin 31 on Teensy 4.1 -> Pin 1 (TX) on U3 MCP2562FD
 
-Pictures of the wiring are seen below:
-
-![1671222418700](image/README/1671222418700.png)
