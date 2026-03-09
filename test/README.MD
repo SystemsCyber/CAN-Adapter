@@ -2,11 +2,11 @@
 
 This directory is intended for PlatformIO Unit testing using Unity.
 
-This directory contains tests for the CAN adapater in order to prove full functionality of the device once assembled. These tests include:
+This directory contains tests for the CAN adapter in order to prove full functionality of the device once assembled. These tests include:
 
 * CAN communication:
 
-  * Tests that the device is able to send and recieve CAN messages on CAN1, CAN2, and CAN3
+  * Tests that the device is able to send and receive CAN messages on CAN1, CAN2, and CAN3
 * LED:
 
   * This turns the LEDS on and off that is for the user to visually confirm
