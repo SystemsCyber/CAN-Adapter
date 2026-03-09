@@ -1,5 +1,5 @@
 /////////////////////////////
-//   CAN Communcation   //
+//   CAN Communication   //
 ///////////////////////////
 
 #include "FlexCAN_T4.h"
@@ -48,60 +48,42 @@ void receiveCallback(const CAN_message_t &rxmsg) { // This is a helper function.
   }
 }
 
-void setupReceivingChannels(int receivingChannel1VAL, int receivingChannel2VAL, int baudrate) { // This is another helper function.
-    //sets receiving channel 1
-    if(receivingChannel1VAL == 1){
-          Can1.setBaudRate(baudrate);
-          Can1.setMaxMB(16);
-          Can1.enableFIFO(true); // We need to use FIFO otherwise the receivers will drop messages.
-          Can1.enableFIFOInterrupt();  // We need to use interrupt driven FIFO otherwise the receivers will drop messages.
-          Can1.onReceive(receiveCallback);
-    }
-    else if(receivingChannel1VAL == 2){
-          Can2.setBaudRate(baudrate);
-          Can2.setMaxMB(16);
-          Can2.enableFIFO(true); // We need to use FIFO otherwise the receivers will drop messages.
-          Can2.enableFIFOInterrupt();  // We need to use interrupt driven FIFO otherwise the receivers will drop messages.
-          Can2.onReceive(receiveCallback);
-    }
-    else if(receivingChannel1VAL == 3){
-          Can3.setBaudRate(baudrate);
-          Can3.setMaxMB(16);
-          Can3.enableFIFO(true); // We need to use FIFO otherwise the receivers will drop messages.
-          Can3.enableFIFOInterrupt();  // We need to use interrupt driven FIFO otherwise the receivers will drop messages.
-          Can3.onReceive(receiveCallback);
-    }
-    //Sets receiving channel 2
-    if(receivingChannel2VAL == 1){
-          Can1.setBaudRate(baudrate);
-          Can1.setMaxMB(16);
-          Can1.enableFIFO(true); // We need to use FIFO otherwise the receivers will drop messages.
-          Can1.enableFIFOInterrupt();  // We need to use interrupt driven FIFO otherwise the receivers will drop messages.
-          Can1.onReceive(receiveCallback);
-    }
-    else if(receivingChannel2VAL == 2){
-          Can2.setBaudRate(baudrate);
-          Can2.setMaxMB(16);
-          Can2.enableFIFO(true); // We need to use FIFO otherwise the receivers will drop messages.
-          Can2.enableFIFOInterrupt();  // We need to use interrupt driven FIFO otherwise the receivers will drop messages.
-          Can2.onReceive(receiveCallback);
-    }
-    else if(receivingChannel2VAL == 3){
-          Can3.setBaudRate(baudrate);
-          Can3.setMaxMB(16);
-          Can3.enableFIFO(true); // We need to use FIFO otherwise the receivers will drop messages.
-          Can3.enableFIFOInterrupt();  // We need to use interrupt driven FIFO otherwise the receivers will drop messages.
-          Can3.onReceive(receiveCallback);
-    }
+void setupChannel(int channelVal, int baudrate) {
+  if (channelVal == 1) {
+    Can1.setBaudRate(baudrate);
+    Can1.setMaxMB(16);
+    Can1.enableFIFO(true); // We need to use FIFO otherwise the receivers will drop messages.
+    Can1.enableFIFOInterrupt();  // We need to use interrupt driven FIFO otherwise the receivers will drop messages.
+    Can1.onReceive(receiveCallback);
+  } else if (channelVal == 2) {
+    Can2.setBaudRate(baudrate);
+    Can2.setMaxMB(16);
+    Can2.enableFIFO(true); // We need to use FIFO otherwise the receivers will drop messages.
+    Can2.enableFIFOInterrupt();  // We need to use interrupt driven FIFO otherwise the receivers will drop messages.
+    Can2.onReceive(receiveCallback);
+  } else if (channelVal == 3) {
+    Can3.setBaudRate(baudrate);
+    Can3.setMaxMB(16);
+    Can3.enableFIFO(true); // We need to use FIFO otherwise the receivers will drop messages.
+    Can3.enableFIFOInterrupt();  // We need to use interrupt driven FIFO otherwise the receivers will drop messages.
+    Can3.onReceive(receiveCallback);
+  }
 }
 
-void floodCanBus(int SendingbusVal, int recievingBus1Val, int recievingBus2Val) {
-  //iterates through each baudrate
+void setupReceivingChannels(int receivingChannel1VAL, int receivingChannel2VAL, int baudrate) { // This is another helper function.
+  // Sets receiving channel 1
+  setupChannel(receivingChannel1VAL, baudrate);
+  // Sets receiving channel 2
+  setupChannel(receivingChannel2VAL, baudrate);
+}
+
+void floodCanBus(int sendingBusVal, int receivingBus1Val, int receivingBus2Val) {
+  // Iterates through each baudrate
   for (int i = 0; i < 4; i++) {
-    //if statements find the bus sending and run the flooding of the CANBUS
-    if(SendingbusVal == 1){
+    // If statements find the bus sending and run the flooding of the CAN bus
+    if (sendingBusVal == 1) {
       Can1.setBaudRate(BAUDRATES[i]);
-      setupReceivingChannels(recievingBus1Val, recievingBus2Val, BAUDRATES[i]);
+      setupReceivingChannels(receivingBus1Val, receivingBus2Val, BAUDRATES[i]);
       int sendCount = 0;
       while (sendCount < messagesToSend) {
         if (Can1.getTXQueueCount() == 0) { // Only send the next message once we've finished sending the previous message.
@@ -109,30 +91,28 @@ void floodCanBus(int SendingbusVal, int recievingBus1Val, int recievingBus2Val) 
           sendCount++;
         }
       }
-    }
-    else if(SendingbusVal == 2){
+    } else if (sendingBusVal == 2) {
       Can2.setBaudRate(BAUDRATES[i]);
-      setupReceivingChannels(recievingBus1Val, recievingBus2Val, BAUDRATES[i]);
+      setupReceivingChannels(receivingBus1Val, receivingBus2Val, BAUDRATES[i]);
       int sendCount = 0;
       while (sendCount < messagesToSend) {
-        if (Can2.getTXQueueCount() == 0) { 
-          Can2.write(testMsg); 
+        if (Can2.getTXQueueCount() == 0) {
+          Can2.write(testMsg);
           sendCount++;
         }
-     }
-    }
-    else if(SendingbusVal == 3){
+      }
+    } else if (sendingBusVal == 3) {
       Can3.setBaudRate(BAUDRATES[i]);
-      setupReceivingChannels(recievingBus1Val, recievingBus2Val, BAUDRATES[i]);
+      setupReceivingChannels(receivingBus1Val, receivingBus2Val, BAUDRATES[i]);
       int sendCount = 0;
       while (sendCount < messagesToSend) {
-        if (Can3.getTXQueueCount() == 0) { 
-          Can3.write(testMsg); 
+        if (Can3.getTXQueueCount() == 0) {
+          Can3.write(testMsg);
           sendCount++;
+        }
       }
-     }
     }
- }
+  }
 }
 
 void test_Can1_bus_flooding(void) { // This is a test function. The name should begin with "test_" and describe what its testing. It must not return anything and cannot take any arguments.
@@ -141,8 +121,8 @@ void test_Can1_bus_flooding(void) { // This is a test function. The name should 
   sendingBus = 1;
   floodCanBus(sendingBus, receivingBus1, receivingBus2);
   uint16_t receivedCounts[2] = {receivedCount1, receivedCount2};
-  TEST_ASSERT_EACH_EQUAL_UINT16(messagesToSend * 4, &receivedCounts, 2); // This will check if each element in the array is equal to 3000.
-  // TEST_ASSERT_EACH_EQUAL_UINT16(messagesToSend * 4, &receivedCounts, 2, "Some addition info"); // Unity already generates failure messages, but if you need to add additional info on failure here is how.
+  TEST_ASSERT_EACH_EQUAL_UINT16(messagesToSend * 4, &receivedCounts, 2); // This will check if each element in the array is equal to messagesToSend * 4 (12000).
+  // TEST_ASSERT_EACH_EQUAL_UINT16(messagesToSend * 4, &receivedCounts, 2, "Some additional info"); // Unity already generates failure messages, but if you need to add additional info on failure here is how.
 }
 
 void test_Can2_bus_flooding(void) { // This is a test function. The name should begin with "test_" and describe what its testing. It must not return anything and cannot take any arguments.
@@ -151,7 +131,7 @@ void test_Can2_bus_flooding(void) { // This is a test function. The name should 
   sendingBus = 2;
   floodCanBus(sendingBus, receivingBus1, receivingBus2);
   uint16_t receivedCounts[2] = {receivedCount1, receivedCount2};
-  TEST_ASSERT_EACH_EQUAL_UINT16(messagesToSend * 4, &receivedCounts, 2); // This will check if each element in the array is equal to 3000.
+  TEST_ASSERT_EACH_EQUAL_UINT16(messagesToSend * 4, &receivedCounts, 2); // This will check if each element in the array is equal to messagesToSend * 4 (12000).
 }
 
 void test_Can3_bus_flooding(void) { // This is a test function. The name should begin with "test_" and describe what its testing. It must not return anything and cannot take any arguments.
@@ -160,9 +140,8 @@ void test_Can3_bus_flooding(void) { // This is a test function. The name should 
   sendingBus = 3;
   floodCanBus(sendingBus, receivingBus1, receivingBus2);
   uint16_t receivedCounts[2] = {receivedCount1, receivedCount2};
-  TEST_ASSERT_EACH_EQUAL_UINT16(messagesToSend * 4, &receivedCounts, 2); // This will check if each element in the array is equal to 3000.
+  TEST_ASSERT_EACH_EQUAL_UINT16(messagesToSend * 4, &receivedCounts, 2); // This will check if each element in the array is equal to messagesToSend * 4 (12000).
 }
-
 
 /**
   * Necessary For Arduino framework
